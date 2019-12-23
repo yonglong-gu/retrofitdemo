@@ -1,31 +1,46 @@
-package com.example.retrofitdemo;
+package com.example.retrofitdemo.retrofitlist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.retrofitdemo.R;
+import com.example.retrofitdemo.ResponseBean;
 import com.example.retrofitdemo.base.BGARefreshUtil;
 import com.example.retrofitdemo.base.BaseMvpActivity;
-import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
-public class MainActivity extends BaseMvpActivity<MyPresenter> {
+public class ImgListActivity extends BaseMvpActivity<ImgListPresenter> {
+    @Override
+    protected ImgListPresenter initPresenter() {
+        return new ImgListPresenter(this);
+    }
+
     private BGARefreshLayout bg;
     private RecyclerView recycle;
-    private MyRecycleAdapter mAdapter;
+    private ImgListRecycleAdapter mAdapter;
+
+    public static Intent buildIntent(Context context){
+        Intent intent = new Intent(context , ImgListActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Fresco.initialize(this);
+        setContentView(R.layout.activity_img_list);
+
+        setTitleView(findViewById(R.id.toolbar));
         recycle = findViewById(R.id.recycle);
         bg = findViewById(R.id.bg);
 
-        mAdapter = new MyRecycleAdapter(this, R.layout.item);
+        mAdapter = new ImgListRecycleAdapter(this, R.layout.item);
         recycle.setLayoutManager(new LinearLayoutManager(this));
         recycle.setAdapter(mAdapter);
 
@@ -45,11 +60,6 @@ public class MainActivity extends BaseMvpActivity<MyPresenter> {
         });
 
         bg.beginRefreshing();
-    }
-
-    @Override
-    protected MyPresenter initPresenter() {
-        return new MyPresenter(this);
     }
 
     public void refreshData(List<ResponseBean> list) {

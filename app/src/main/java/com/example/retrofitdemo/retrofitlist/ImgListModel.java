@@ -1,4 +1,8 @@
-package com.example.retrofitdemo;
+package com.example.retrofitdemo.retrofitlist;
+
+import com.example.retrofitdemo.HttpResultFunction;
+import com.example.retrofitdemo.NetApiUtils;
+import com.example.retrofitdemo.ResponseBean;
 
 import java.util.List;
 
@@ -6,10 +10,10 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MyModel {
+public class ImgListModel {
 
     public void getList(Observer observer) {
-        NetApiUtils.getApi().getMyBase()
+        NetApiUtils.getApi().getMyBase(20)
                 .map(new HttpResultFunction<List<ResponseBean>>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
