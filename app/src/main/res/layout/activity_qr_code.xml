@@ -2,12 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <com.example.retrofitdemo.base.MyToolbar
+        android:id="@+id/toolbar"
+        app:title="扫描"
+        style="@style/DefaultToolbar"/>
 
     <Button
         android:id="@+id/btn_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="扫描" />
+
+    <TextView
+        android:textSize="14sp"
+        android:textColor="#ff2033"
+        android:id="@+id/tv_result"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

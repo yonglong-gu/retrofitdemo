@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +18,7 @@ import com.example.retrofitdemo.qrcode.activity.CaptureActivity;
 import com.example.retrofitdemo.qrcode.util.Constant;
 
 public class QrCodeActivity extends BaseMvpActivity {
+    private TextView tv_result;
 
     public static Intent buildIntent(Context context){
         Intent intent = new Intent(context , QrCodeActivity.class);
@@ -31,6 +33,8 @@ public class QrCodeActivity extends BaseMvpActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
+        setTitleView(findViewById(R.id.toolbar));
+        tv_result = findViewById(R.id.tv_result);
 
         findViewById(R.id.btn_code).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,5 +61,17 @@ public class QrCodeActivity extends BaseMvpActivity {
         // 二维码扫码
         Intent intent = new Intent(QrCodeActivity.this, CaptureActivity.class);
         startActivityForResult(intent, Constant.REQ_QR_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //扫描结果回调
+        if (requestCode == Constant.REQ_QR_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN);
+            //将扫描出的信息显示出来
+            tv_result.setText(scanResult);
+        }
     }
 }
